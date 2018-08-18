@@ -14,6 +14,7 @@ from UI.keys_def            import CurKeys
 
 from rom_list_page import RomListPage
 from fav_list_page import FavListPage
+from rom_page import RomPage
 
 class FavDeleteConfirmPage(DeleteConfirmPage):
     
@@ -52,6 +53,7 @@ class MyEmulator(object):
     _Icons = {}
     RomListPage = None
     FavListPage = None
+    RomPage = None
     _Emulator = None
     
     _FavGID = 31415
@@ -99,16 +101,25 @@ class MyEmulator(object):
         self.RomListPage._Emulator = self._Emulator
         self.RomListPage._Parent = self
         self.RomListPage.Init()
-    
+
+    def InitRomPage(self,main_screen):
+        self.RomPage = RomPage()
+        self.RomPage._Screen = main_screen
+        self.RomPage._Name = self._Emulator["TITLE"]
+        self.RomPage._Emulator = self._Emulator
+        self.RomPage._Parent = self
+        self.RomPage.Init()
+
     def Init(self,main_screen):
         self.load_icons()
         self.InitDeleteConfirmPage(main_screen)    
-        self.InitRomListPage(main_screen)
+        #self.InitRomListPage(main_screen)
         self.InitFavListPage(main_screen)
+        self.InitRomPage(main_screen)
     
     def API(self,main_screen):
         if main_screen !=None:
             main_screen.PushCurPage()
-            main_screen.SetCurPage(self.RomListPage)
+            main_screen.SetCurPage(self.RomPage)
             main_screen.Draw()
             main_screen.SwapAndShow()
