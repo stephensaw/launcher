@@ -114,14 +114,17 @@ class RomPage(Page):
             self._RomList.append(rom)
 
         if len(self._RomList) > 0:
-            self._RomList[0]._X = 160  - (self._RomList[0]._Poster.get_width() / 2)
-            self._RomList[1]._X = 160 * 2 - (self._RomList[1]._Poster.get_width() / 2)
+            self._RomList[0]._X = 160  - (poster_width / 2)
+            self._RomList[1]._X = 160 * 2 - (poster_width / 2)
 
         self.Draw()
 
     def ReadPosterFromZip(self, filepath):
         zip = zipfile.ZipFile(filepath, "r")
         files = [name for name in zip.namelist() if name.endswith('.jpg')]
+
+        if len(files) <= 0:
+            return None
 
         return self.CreateImage(zip.read(files[0]), files[0])
 
@@ -300,7 +303,7 @@ class RomPage(Page):
 
         for i in range(start, end + 1):
             rom = self._RomList[i]
-            rom._X = 160*(offset + index) - (rom._Poster.get_width() / 2)
+            rom._X = 160*(offset + index) - (poster_width / 2)
             rom.Draw()
 
             if self._SelectedIndex == i:
