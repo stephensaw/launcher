@@ -213,7 +213,7 @@ class RomPage(Page):
             self.Launch()
 
         if event.key == CurKeys["Right"]:
-            if self._SelectedIndex == len(self._RomList) - 1:
+            if len(self._RomList) == 0 or self._SelectedIndex == len(self._RomList) - 1:
                 return
 
             self._RomList[self._SelectedIndex]._Selected = False
